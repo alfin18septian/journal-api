@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <h1>Welcome to IT Journal Repository, <%= @user.name %></h1>
+    <p>
+      You have successfully signed up to IT Journal Repository,
+      your username is: <%= @user.username %>.<br>
+    </p>
+    <p>You can confirm your account email through the link below:</p>
+    <p><a href="<%= @url %>">Confirm my account</a></p>
+    <br>
+    <p>Thanks for joining and have a great day!</p>
+  </body>
+</html>
