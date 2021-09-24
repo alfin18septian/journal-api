@@ -7,11 +7,30 @@
     <h1>Welcome to IT Journal Repository, <%= @user.name %></h1>
     <p>
       You have successfully signed up to IT Journal Repository,
-      your username is: <%= @user.username %>.<br>
+      your information:.
     </p>
-    <p>You can confirm your account email through the link below:</p>
-    <p><a href="<%= @url %>">Confirm my account</a></p>
+    <table border="0">
+      <tr>
+        <td scope="row">Name</td>
+        <td>:</td>
+        <td><%= @user.name %></td>
+      </tr>
+      <tr>
+        <td scope="row">Username</td>
+        <td>:</td>
+        <td><%= @user.username %></td>
+      </tr>
+      <tr>
+        <td scope="row">Email</td>
+        <td>:</td>
+        <td><%= @user.email %></td>
+      </tr>
+    </table>
     <br>
-    <p>Thanks for joining and have a great day!</p>
+    <p>You confirmation token is: <b><u><%= @token %></u></b></p>
+    <p>This token will expire in 24 hours and can be used only once.</p>
+    <br>
+    <p>Thank you,</p>
+    <p><b>IT Journal Repository Team</b></p>
   </body>
 </html>

@@ -1,6 +1,5 @@
 class Api::V1::UserController < ApplicationController
-    include ActionController::HttpAuthentication::Token
-
+    
     before_action :authenticate_user
     skip_before_action :authenticate_user, only: [:create, :confirm]
     before_action :set_user, only: [ :show, :update, :destroy ]
@@ -52,13 +51,13 @@ class Api::V1::UserController < ApplicationController
     
     private
 
-    def authenticate_user
-        token, _option = token_and_options(request)
-        user_id = AuthenticationTokenService.decode(token)
-        User.find(user_id)
-        rescue ActiveRecord::RecordNotFound, JWT::DecodeError => e
-            render json: {result: false, message: e}, status: :unauthorized
-    end
+    # def authenticate_user
+    #     token, _option = token_and_options(request)
+    #     user_id = AuthenticationTokenService.decode(token)
+    #     User.find(user_id)
+    #     rescue ActiveRecord::RecordNotFound, JWT::DecodeError => e
+    #         render json: {result: false, message: e}, status: :unauthorized
+    # end
 
     def notFound
         render json: { result: false, message: "Data Not Found" }, status: :not_found

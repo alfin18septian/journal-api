@@ -3,11 +3,16 @@ Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
       post 'authenticate', to: 'authentication#create'
+
       resources :user do
         collection do
           get 'confirm'
         end
       end
+      
+      post 'password/forgot', to: 'passwords#forgot'
+      post 'password/reset', to: 'passwords#reset'
+      put 'password/update', to: 'passwords#update'
     end
   end
 end
