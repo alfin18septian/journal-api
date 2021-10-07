@@ -10,6 +10,14 @@ Rails.application.routes.draw do
         end
       end
       
+      resources :journals do
+        collection do
+          get 'confirm'
+        end
+      end
+
+      resources :categorys
+      
       post 'password/forgot', to: 'passwords#forgot'
       post 'password/reset', to: 'passwords#reset'
       put 'password/update', to: 'passwords#update'

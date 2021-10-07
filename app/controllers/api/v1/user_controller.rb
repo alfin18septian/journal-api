@@ -1,5 +1,4 @@
 class Api::V1::UserController < ApplicationController
-    # include ActionController::HttpAuthentication::Token
 
     before_action :current_user
     skip_before_action :current_user, only: [:create, :confirm]
@@ -7,21 +6,21 @@ class Api::V1::UserController < ApplicationController
     rescue_from ActiveRecord::RecordNotFound, with: :notFound
 
     def index
-        render json: { result: true, value: custom_data_users(User.all ) }, status: :ok
+        render json: { result: true, value: custom_data_users(User.all) }, status: :ok
     end
 
     def create
         user = User.new(user_params)
         if user.save
             UserMailer.confirmation_email(user).deliver_now
-            render json: { status: true, message: 'User created successfully', value: custom_data_user(user) }, status: :created
+            render json: { result: true, message: 'Create Success', value: custom_data_user(user) }, status: :created
         else
-            render json: { status: false, message: user.errors.full_messages }, status: :bad_request
+            render json: { result: false, message: user.errors.full_messages }, status: :bad_request
         end
     end
 
     def show
-        render json: { result: true, user: custom_data_user(@user) }, status: :ok
+        render json: { result: true, value: custom_data_user(@user) }, status: :ok
     end
 
     def update
@@ -44,21 +43,13 @@ class Api::V1::UserController < ApplicationController
         user = User.find_by(confirmation_token: params[:token].to_s)      
         if user.present? && user.confirmation_token_valid?
             user.mark_as_confirmed!
-            render json: {status: true, message: 'Congratulations, account confirmed successfully'}, status: :ok
+            render json: {result: true, message: 'Congratulations, account confirmed successfully'}, status: :ok
         else
-            render json: {status: false, message: 'Invalid token'}, status: :bad_request
+            render json: {result: false, message: 'Invalid token'}, status: :bad_request
         end
     end
     
     private
-
-    # def authenticate_user
-    #     token, _option = token_and_options(request)
-    #     user_id = AuthenticationTokenService.decode(token)
-    #     User.find(user_id)
-    #     rescue ActiveRecord::RecordNotFound, JWT::DecodeError => e
-    #         render json: {result: false, message: e}, status: :unauthorized
-    # end
 
     def notFound
         render json: { result: false, message: "Data Not Found" }, status: :not_found

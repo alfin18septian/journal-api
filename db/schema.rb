@@ -10,10 +10,36 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_09_24_140553) do
+ActiveRecord::Schema.define(version: 2021_10_07_081051) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "categories", force: :cascade do |t|
+    t.string "category"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "journal_categories", force: :cascade do |t|
+    t.bigint "journal_id", null: false
+    t.bigint "category_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["category_id"], name: "index_journal_categories_on_category_id"
+    t.index ["journal_id"], name: "index_journal_categories_on_journal_id"
+  end
+
+  create_table "journals", force: :cascade do |t|
+    t.string "title"
+    t.string "abstact"
+    t.string "full_text"
+    t.string "author"
+    t.integer "id_user"
+    t.datetime "verified_at"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "name", null: false
@@ -30,4 +56,6 @@ ActiveRecord::Schema.define(version: 2021_09_24_140553) do
     t.datetime "reset_password_sent_at"
   end
 
+  add_foreign_key "journal_categories", "categories"
+  add_foreign_key "journal_categories", "journals"
 end
