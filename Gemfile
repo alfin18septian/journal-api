@@ -17,7 +17,7 @@ gem 'puma', '~> 5.0'
 gem 'bcrypt', '~> 3.1.7'
 
 gem 'jwt'
-
+gem 'carrierwave'
 gem 'cloudinary'
 
 # Use Active Storage variant
