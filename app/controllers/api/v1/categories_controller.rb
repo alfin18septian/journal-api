@@ -1,4 +1,4 @@
-class Api::V1::CategorysController < ApplicationController
+class Api::V1::CategoriesController < ApplicationController
     
     before_action :set_category, only: [ :show, :update, :destroy ]
     rescue_from ActiveRecord::RecordNotFound, with: :notFound

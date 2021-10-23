@@ -16,7 +16,7 @@ Rails.application.routes.draw do
         end
       end
 
-      resources :categorys
+      resources :categories
       
       post 'password/forgot', to: 'passwords#forgot'
       post 'password/reset', to: 'passwords#reset'
