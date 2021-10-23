@@ -1,18 +1,18 @@
 ---
 development:
-  cloud_name: diskominfo-kabupaten-solok
+  cloud_name: dkmsol
   api_key: '513615739479836'
   api_secret: uHvnL-lK24Ca8i_iwYVIaEqaqLI
   enhance_image_tag: true
   static_file_support: false
 production:
-  cloud_name: diskominfo-kabupaten-solok
+  cloud_name: dkmsol
   api_key: '513615739479836'
   api_secret: uHvnL-lK24Ca8i_iwYVIaEqaqLI
   enhance_image_tag: true
   static_file_support: true
 test:
-  cloud_name: diskominfo-kabupaten-solok
+  cloud_name: dkmsol
   api_key: '513615739479836'
   api_secret: uHvnL-lK24Ca8i_iwYVIaEqaqLI
   enhance_image_tag: true

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_10_07_081051) do
+ActiveRecord::Schema.define(version: 2021_10_12_160535) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -30,6 +30,14 @@ ActiveRecord::Schema.define(version: 2021_10_07_081051) do
     t.index ["journal_id"], name: "index_journal_categories_on_journal_id"
   end
 
+  create_table "journal_files", force: :cascade do |t|
+    t.integer "journal_id"
+    t.string "url"
+    t.string "tipe"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "journals", force: :cascade do |t|
     t.string "title"
     t.string "abstact"
@@ -37,6 +45,15 @@ ActiveRecord::Schema.define(version: 2021_10_07_081051) do
     t.string "author"
     t.integer "id_user"
     t.datetime "verified_at"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.bigint "upload_id"
+    t.index ["upload_id"], name: "index_journals_on_upload_id"
+  end
+
+  create_table "uploads", force: :cascade do |t|
+    t.string "url"
+    t.string "tipe"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
