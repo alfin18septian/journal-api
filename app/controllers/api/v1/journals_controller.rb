@@ -6,6 +6,14 @@ class Api::V1::JournalsController < ApplicationController
         render json: { result: true, value: custom_journals_data(Journal.all) }, status: :ok
     end
 
+    def show
+        journal = Journal.find(params[:id])
+        render json: { 
+            result: true, 
+            data: custom_journal_data(journal)
+        }, status: :ok
+    end
+
     def create
         file_response = Cloudinary::Uploader.upload(params[:file], :public_id => generate_token, :folder => '/journal_files')
         if file_response
@@ -68,6 +76,22 @@ class Api::V1::JournalsController < ApplicationController
                 end
             }
         end
+    end
+
+    def custom_journal_data(journal)
+        journal_categories = JournalCategory.where(journal_id: journal.id)
+        {
+            id: journal.id,
+            title: journal.title,
+            abstract: journal.abstact,
+            author: journal.author,
+            upload_url: journal.upload.url,
+            categories: journal_categories.map do |journal_category|
+                {
+                    category: journal_category.category.category,
+                }
+            end
+        }
     end
 
     def generate_token
