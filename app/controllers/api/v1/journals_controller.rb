@@ -15,11 +15,20 @@ class Api::V1::JournalsController < ApplicationController
     end
 
     def create
-        file_response = Cloudinary::Uploader.upload(params[:file], :public_id => generate_token, :folder => '/journal_files')
+        begin
+            file_response = Cloudinary::Uploader.upload(params[:file], :public_id => generate_token, :folder => '/journal_files')
+        rescue Exception  => e
+            return render json: {status: false, message: "File Journal Can't be blank"}, status: 500
+        end
+        
         if file_response
             upload = Upload.create!(url: file_response['url'], tipe: file_response['format'])
             if upload.save
-                journal = Journal.create!(journal_params.merge(upload_id: upload.id))
+                begin
+                    journal = Journal.create!(journal_params.merge(upload_id: upload.id))
+                rescue Exception  => e
+                    return render json: {status: false, message: e}, status: :unprocessable_entity
+                end
                 
                 journal_id = journal.id
                 
@@ -30,20 +39,19 @@ class Api::V1::JournalsController < ApplicationController
                     ic +=1
                 end
                 if journal.save
-                    
-                    render json: {status: true, message: "Create Secces"}
+                    return render json: {status: true, message: "Create Secces"}
                 else
-                    render json: {result: false, massage: journal.errors}, status: :unprocessable_entity
+                    return render json: {result: false, massage: journal.errors.full_messages}, status: :unprocessable_entity
                 end
             else 
                 # unlink Berkas
-                render json: {
+                return render json: {
                     message: upload.errors,
                 },
                 status: :unprocessable_entity
             end
         else 
-            render json: {
+            return render json: {
                 message: file_response.errors,
             },
             status: :unprocessable_entity
